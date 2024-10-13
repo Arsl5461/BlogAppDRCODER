@@ -1,16 +1,26 @@
 import DataTable from 'react-data-table-component';
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const List = () => {
-    const [data,setData]=useState([])
-    const fetchData=async()=>{
-        const response=await axios.get("http://localhost:8082/api/blog")
+    const [data, setData] = useState([])
+    const fetchData = async () => {
+        const response = await axios.get("http://localhost:8082/api/blog")
         setData(response.data.blogs)
     }
-    useEffect(()=>{
-fetchData();
-    },[])
+
+    const handleDelete = async (id) => {
+        const response = await axios.delete(`http://localhost:8082/api/blog/${id}`)
+        if (response.data.success) {
+            toast.success(response.data.message)
+            fetchData()
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [])
     const columns = [
         {
             name: 'Title',
@@ -20,18 +30,31 @@ fetchData();
             name: 'Description',
             selector: row => row.description,
         },
+        {
+            name: 'Actions',
+            cell: row => (
+                <>
+                    <Link className='btn btn-primary' to={`/blog/${row._id}`}>U</Link>
+                    <button className='btn btn-danger' onClick={() => handleDelete(row._id)}>D</button>
+                </>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
     ];
-  return (
-    <div>
+
+    return (
+        <div>
 
 
 
-		<DataTable
-			columns={columns}
-			data={data}
-		/>
-    </div>
-  )
+            <DataTable
+                columns={columns}
+                data={data}
+            />
+        </div>
+    )
 }
 
 export default List
