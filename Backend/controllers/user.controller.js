@@ -1,6 +1,8 @@
 const User = require("../model/user.model")
 const bcrypt = require("bcryptjs")
 const salt = 10;
+const jwt=require("jsonwebtoken")
+
 exports.store = async (req, res, next) => {
     try {
         const { password } = req.body;
@@ -22,7 +24,8 @@ exports.login = async (req, res, next) => {
         }
         const userFinded=await bcrypt.compare(password,user.password)
         if(userFinded){
-            return res.json({ status: 200, success: true, message: "User Logged in Successfully" })
+            const token= jwt.sign({ id: user._id,exp: Math.floor(Date.now() / 1000) + (60 * 60) }, 'Abc12345');
+            return res.json({ status: 200, success: true, message: "User Logged in Successfully",token })
         }   
         else{
             return res.json({status:400,message:"Password Incorrect",success:false})

@@ -13,7 +13,13 @@ return res.json({status:200,success:true,message:"Blog Created Successfully",blo
 
 exports.index = async(req, res, next) => {
     try {
-        const blogs=await Blog.find();
+        const {userId}=req.query;
+        const query={};
+        console.log("🚀 ~ exports.index=async ~ query:", query)
+        if(userId){
+            query.userId=userId;
+        }
+        const blogs=await Blog.find(query);
         return res.json({status:200,success:true,message:"Blogs Fetched Successfully",blogs})
     }
     catch (err) {

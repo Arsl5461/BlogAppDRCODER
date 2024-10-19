@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const List = () => {
+    const token=localStorage.getItem("token")
+    const decodedToken=jwtDecode(token)
     const [data, setData] = useState([])
     const fetchData = async () => {
-        const response = await axios.get("http://localhost:8082/api/blog")
+        const response = await axios.get(`http://localhost:8082/api/blog?userId=${decodedToken.id}`)
         setData(response.data.blogs)
     }
 
