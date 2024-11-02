@@ -7,6 +7,8 @@ import Update from './pages/Update';
 import Login from './pages/Login'; // Import your Login component
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Products from './components/Products';
+import Checkout from './components/Checkout';
 
 function App() {
   const location = useLocation();
@@ -26,6 +28,8 @@ function App() {
         <Route path='/list' element={token ? <List /> : <Navigate to='/login' />} />
         <Route path='/blog/:id' element={token ? <Update /> : <Navigate to='/login' />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/products' element={<Products/>}></Route>
+        <Route path='/checkout' element={<Checkout/>}></Route>
       </Routes>
       <ToastContainer />
     </>

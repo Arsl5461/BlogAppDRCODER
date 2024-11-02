@@ -22,6 +22,8 @@ const Navbarr = () => {
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="/add">Add Blogs</Nav.Link>
               <Nav.Link href="/list">List Blogs</Nav.Link>
+              <Nav.Link href="/products">Products</Nav.Link>
+              <Nav.Link href="/checkout">Checkout</Nav.Link>
               <Button className='btn btn-danger' onClick={logout}>Logout</Button>
 
             </Nav>
