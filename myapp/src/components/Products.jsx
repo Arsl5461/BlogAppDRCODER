@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchProducts } from '../features/products/productSlice';
 import Loader from './Loader';
+import { toast } from 'react-toastify';
 
 
 const Products = () => {
@@ -21,7 +22,7 @@ const Products = () => {
       }
     
       if (status === 'failed') {
-        return <p>{error}</p>;
+        return toast.dark(error);
       }
       return (
         <div>
